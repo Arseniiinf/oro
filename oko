@@ -1,279 +1,184 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
-#include<stdbool.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
 
-
-int karel_asleep(const char position){
- if(position == '-')
-  return 1;
- else{
-  if(position == '|')
-   return 0;
- }
- return -1;
-}
-
-
-funkcia direction_degree(const char dir){
- if(dir=='E'){
-  return 0;
- }
- else if(dir=='N'){
-  return 90;
- }
- else if(dir=='W'){
-  return 180;
- }
- else if(dir=='S'){
-  return 270;
- }
- else{
+int karel_asleep(const char position) {
+  if(position == '-')
+    return 1;
+  else{
+    if(position == '|')
+      return 0;
+  }
   return -1;
- }
 }
 
-funkcia swap_sign(const int size, int array[]){
-  if(array!=NULL){
-   for(int i=0; i<size; i++){
-    if(array[i]!=0){
-     array[i]*=-1;
+
+int sum_greater(const int a, const int b, const int c) {
+  int sum = 0;
+  if(a == b && a == c)
+    return a+b;
+  if(a>=b && a>=c){
+    sum += a;
+    if(b>c)
+      sum += b;
+    else
+      sum += c;
+    return sum;
+  }
+  if(b>=a && b>=c){
+    sum += b;
+    if(a>c)
+      sum += a;
+    else
+      sum += c;
+    return sum;
+  }
+  if(c>=a && c>=b){
+    sum += c;
+    if(a>b)
+      sum += a;
+    else
+      sum += b;
+    return sum;
+  }
+  return -1;
+}
+
+
+void string_to_upper(char string[]) {
+  if(string != NULL){
+    for(int i = 0; i<strlen(string); i++){
+        if(string[i] >= 97 && string[i] <= 122){
+              string[i] = toupper(string[i]);
+        }
+      }
+  }
+}
+
+
+void swap_sign(const int size, int array[]){
+  if(array != NULL){
+    for(int i = 0; i<size; i++){
+        if(array[i] != 0){
+            array[i] *= -1;
+        }
+      }
+  }
+}
+
+
+int min_2d(const int size, int array[][size]) {
+  if(array != NULL){
+    int min = array[0][0];
+    for(int i = 0; i<size; i++){
+          for(int j = 0; j<size; j++){
+              if(array[i][j] < min)
+              min = array[i][j];
+        }
     }
-   }
+    return min;
   }
-}
-
-
-
-
-
-
-
-funkcia change_whites(char string[]){
-  if(string==NULL){
-   return;
+  else{
+    return -1;
   }
-  int en=strlen(string);
-  for(int i=0;i<len;i++){
-   if(string[i]== ' ' || string[i]=='\n){
-    string[i]='.';
-   }
-  }
-}
-
-funkcia count_whites(const char string[]){
- int a=0;
- if(string==NULL){
-  return -1;
- }
- for(int i=0; i<strlen(string); i++){
-  if(string[i]==' '||string[i]=="\t"||string[i]=='\n'){
-   a++;
-  }
- }
- return a;
   return -2;
 }
 
-funkcia string_to upper(char string[]){
-  if(string != NULL){
-   for(int i=0; i<strlen(string);i++){
-    if(string[i]>=97 && string[i]<=122){
-     string[i]=toupper(string[i]);
+
+int sum_digits(const long int number) {
+  if(number < 0)
+    return 0;
+  int sum = 0;
+  int newnumber = number;
+  while(newnumber != 0){
+    sum += newnumber%10;
+    newnumber /= 10;
+  }
+  return sum;
+}
+
+void fib2array(const int size, int array[]) {
+  
+  if(array != NULL){
+    array[0] = 1;
+    array[1] = 1;
+    if(size>2){
+          for(int i = 2; i<size; i++){
+              array[i] = array[i-2] + array[i-1];
+        }
     }
-   }
-  }
-} 
-
-
-funkcia string_to _upper(char string[]){
-  if(string==NULL){
-   return;
-  }
-  for(int i=0; string[i] != '\0'; i++){
-   if(isalpha(string[i])){
-    string[i]=toupper(string[i]);
-   }
   }
 }
 
-
-
-
-
-
-funkcia min_2d(const int size, int array[][size]){
- if(array!=NULL){
-  int min=array[0][0];
-  for(int i=0;i<size;i++){
-   for(int j=0;j<size;j++){
-    if(array[i][j]<min)
-    min=array[i][j];
-   }
+int div_by_3(const int num) {
+  if (num % 3 == 0) {
+    return 1;
+  } else {
+    return 0;
   }
-  return min;
- }
- else{
-  return -1;
- }
- return -2;
-}
-
-funkcia max_2d(const int size, int array[][size]){
- if(array==NULL){
-  return -1;
- }
- int max=array[0][0];
- for(int i=0;i<size;i++){
-  for(int j=0;j<size;j++){
-   if(array[i][j]>max){
-    max=array[i][j];
-   }
-  }
- }
- return max;
- return -2;}
-
-funkcia sum_digits(const long int number){ 
-if(number<0){
-  return 0; 
- int sum=0;
- int newnumber=number;
- while(newnumber !=0){
-  sum += newnumber%10;
-  newnumber/=10; }
-return sum;}
-
-funkcia fib2array(const int size, int array[]){
- if(array != NULL){
-  array[0]=1;
-  array[1]=1;
-  if(size>2){
-   for(int i=2; i<size; i++){
-    array[i]=array[i-2]+array[i-2];
-   }
-  }
- }
-}
-funkcia div_by_3(const int num){
- if(num%3==0){
-  return 1;}
- else{
-   return 0;}
- return -1;}
-
-fcia sum_greater(const int a,const int b,const int c){
- int sum=0;
- if(a==b && a==c){
-  return a+b; }
-if(a>=b && a>=c){
-  sum+=a; }
-if(b>c){
-   sum+=b; }
-Else{
-   sum+=c; }
-return sum;}
-if(b>=a && b>=c){
-  sum+=b;}
-  if(a>c){
-   sum+=a;}
-  else{
-   sum+=c;}
-  return sum;}
- if(c>=a && c>=b){
-  sum+=c;}
-  if(a>b){
-   sum+=a;}
-  else{
-   sum+=b;}
-  return sum;}
- return -1;
-
-funkcia even(const int num){
-  if(num%2==0){
-   return 1;}
-  else{
-    return 0;}
+  
   return -1;
 }
 
-funkcia is_vowel(char i){
- if((i=='a'||i=='e'||i=='i'||i=='o'||i=='u'||i=='y')
- ||(i=='A'||i=='E'||i=='I'||i=='O'||i=='U'||i=='Y'||)){
-  return 1;
- }
- else{
-   return 0;
- }
-}
 
-
-funkcia vowels_count(const char string[]){
- if(string==NULL){
-  return -1;}
- int x=strlen(string);
- int count =0;
- for(int y=0;y<x;y++){     if(string[y]=='a'||string[y]=='A'||string[y]=='e'||string[y]=='E'||string[y]=='I'||string[y]=='i'     ||string[y]=='o'||string[y]=='O'||string[y]=='u'||string[y]=='U'||string[y]=='Y'||string[y]=='y'){
-   count++;
+int even(const int num) {
+  if (num % 2 == 0) {
+    return 1;
+  } else {
+    return 0;
   }
- }
- return count;
-}
-
-funkcia count_zeroes_2d(const int size, int array[][size]){
- if(array==NULL){
+  
   return -1;
- }
- int zeroes=0;
- for(int i=0;i<size;i++){
-  for(int j=0;j<size;j++){
-   if(array[i][j]==0){
-    zeroes++;
-   }
-  }
- }
- return zeroes;
- return -2;
-}
-
-funkcia long_multiplies(const int below){
- if(below>=10000||below<0){
-  return -1;
- }
- int result=0;
- for(int i=below-1;i>0;i--){
-  if(i%3==0||i%5==0){
-   result=result+1;
-  }
- }
- return result;
- return -2;
 }
 
 
+void change_whites(char string[]) {
+      if (string == NULL) {
+      return;
+    }
+  
+    int len = strlen(string);
+  
+      for (int i = 0; i < len; i++) {
+      if (string[i] == ' ' || string[i] == '\n') {
+        string[i] = '.';
+      }
+    }
+}
 
+int is_vowel(char i) {
+  if ((i == 'a' || i == 'e' || i == 'i' || i == 'o' || i == 'u'
+       || i == 'y') ||
+      (i == 'A' || i == 'E' || i == 'I' || i == 'O' || i == 'U'
+       || i == 'Y')) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
-
-
-
-funkcia count_vowels(char a, char b){
- // velke - 65(A), 90(Z)
+int count_vowels(char a, char b) {
+  // velke - 65(A), 90(Z)
   // male - 97(a), 122(z)
+  
   //int aInt = a;
   //int bInt = b;
   
   int count = 0;
+  
   if ((a >= 'a' && a <= 'z' && b >= 'a' && b <= 'z') ||
       (a >= 'A' && a <= 'Z' && b >= 'A' && b <= 'Z')) {
     if (a < b) {
       for (int i = a; i <= b; i++) {
         char c = i;
+        
         if (is_vowel(c)) {
           count++;
         }
       }
+      
       return count;
     }
     
@@ -304,257 +209,360 @@ funkcia count_vowels(char a, char b){
 }
 
 
-
-
-
-
-
-
-
-
-
-funkcia binary_num(const int num){
- if(num<-1000||num>1000){
-  return -1;
- }
- if(num==1||num==0){
-  return 1;
- }
- else{
-   return0;
- }
-}
-
-
-funkcia last_positive(const int size, const int array[]){
-  if(array==NULL||array<0){
-   return -1;
+int count_zeroes_2d(const int size, int array[][size]) {
+  if (array == NULL) {
+    return -1;
   }
-  for(int i=0;i<size;i++){
-   if(array[i]>0){
-    cislo++;
-   }
-   return cislo;
-   return -2;
-}
-
-funkcia is_valid(const int num){
- if(num>=-130 && num<=130){
-  return 1;
- }
- else{
-   return 0;
- }
-}
-
-funkcia make_direction(const char karel){
- if(karel=='<'){
-  return 'W';
- }
- if(karel=='>'){
- return 'E';
- }
- if(karel=='^'){
- return 'N';
- }
- if(karel=='v'){
- return 'S';
- }
- else{
- return '?';
- }
-}
-
-
-funkcia count_positives(const int size, const int array[]){
- if(array==NULL){
-  return -1;
- }
- int count=0;
- for(int i=0; i<size; i++){
-  if(array[i]>0){
-   count ++;
-  }
- }
- return count;
-}
-
-
-funkcia all_positives(const int size, const int array[]){
- if(array==NULL){
-  return -1;
- }
- int is_positive=1;
- for(int x=0;x<size;x++){
-  if(array[x]<=0){
-   is_positive=0;
-  }
- }
- if(is_possitive==1){
-  return 1;
- }
- else{
-  return 0;
- }
-}
-
-funkcia guess_eval(const int guess, const int my_number){
- if(guess==my_number){
-  return 1;
- }
- if(guess>my_number){
-  return 0;
- }
- return 2;
-}
-
-
-
-
-
-
-
-
-funkcia same_case(const char a, const char b){
- if(isupper(a)){
-  if(isupper(b))
-   return 1;
- }
- if(islower(b)){
-  if(islower(a))
-   return 1;
- }
- if(!isalpha(a)||!isalpha(b)){
-  return -1;
- }
- return 0;
-}
-
-
-funkcia compare_ints(const void* a, const void* b){
-  int arg1=*(const int*)a;
-  int arg2=*(const int*)b;
-  if(arg1<arg2){
-   return -1;
-  }
-  if(arg1>arg2){
-   return 1;
-  }
-  return 0;
-}
-
-funkcia sort(int array[];const int size){
-  if(array==NULL||size<1){
-   return;
-  }
-  qsort(array,size,sizeof(int),compare_ints);
-}
-
-funkcia is_in_array_2d(const int num, const int size, int array[][size]){
-  if(array==NULL){
-   return -1;
-  }
-  for(int i=0; i<size; i++){
-   for(int j=0; j<size; j++){
-    if(array[i][j]==num){
-     return 1;
+  
+  int zeroes = 0;
+  
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (array[i][j] == 0) {
+        zeroes++;
+      }
     }
-   }
-   return 0;
+  }
+  
+  return zeroes;
+  
+  return -2;
+}
+
+
+int min_2d(const int size, int array[][size]) {
+  if (array == NULL) {
+    return -1;
+  }
+  
+  int min = array[0][0];
+  
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (array[i][j] < min) {
+        min = array[i][j];
+      }
+    }
+  }
+  
+  return min;
+  
+  return -2;
+}
+
+
+long multiples(const int below) {
+  if (below >= 10000 || below < 0) {
+    return -1;
+  }
+  
+  int result = 0;
+  
+  for (int i = below - 1; i > 0; i--) {
+    if (i % 3 == 0 || i % 5 == 0) {
+      result = result + i;
+    }
+  }
+  
+  return result;
+  
+  return -2;
+}
+
+int binary_num(const int num) {
+  if(num <-1000 || num > 1000){
+    return -1;
+  }
+  if(num == 1 || num == 0){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+
+
+int karel_turn(const int degree) {
+
+
+  return -2;
+}
+
+
+int find_first_A(const char string[]) {
+ /* int a =0;
+  //for(int b = 0; b < sizeof{string}; b++ )
+  if(string == NULL){
+    return -1;
+  }
+  int size;
+  size = sizeof(string)/sizeof(string[0]);
+  for(int i = 0; i < size; i++){
+    if(string[i] == 'A' || 'a'){
+      int a = i;
+    }else{
+      return -1;
+    }
+  return a;
+*/
+
+return -2;
 }
 
 
 
+int last_positive(const int size, const int array[]){
+/*int cislo = 0;
+  if(array == NULL || array < 0){
+    return -1;
+  }
+  for(int i = 0; i < size; i++ ){
+  if(array[i] > 0){
+    cislo++;
+  }
+    return cislo;
+  }*/
+return -2;
+}
 
-funkcia is_triangle(const int alpha, const int beta, const int gamma){
- int result=alpha+beta+gamma;
- if(alpha<1||beta<1||gamma<1){
+
+int is_prime(const int num) {
+
+  return -2;
+}
+
+int sum_digits(const long int number) {
+  
   return -1;
- }
- if(result==180){
-  return 1;
- }
- else{
-   return 0;
- }
- return -2;
 }
 
-
-funkcia count_negative evens(const int size, const int array[]){
- int a=0;
-if(array==NULL){
- return -1;
-}
-for(int i=0;i<size;i++){
- if(array[i]<0 && array[i]%2==0){
-  a++;
- }
- }
- return a;
- return -2;
-}
-
-funkcia is_won(const char a, const char b, const char c){
- if(a==b||a==b+32||a==b-32){
-  if(a==c||a==c+32||a==c-32){
-   return 1;
+int is_valid(const int num) {
+  if(num >= -130 && num <= 130){
+    return 1;
   }
   else{
     return 0;
   }
- }
- else{
-   return 0;
- }
- return -1;
 }
 
 
-
-
-
-
-
-funkcia negative_even(const int number){
-  if(number<0){
-   if(number%2==0){
-    return 1;}
+char make_direction(const char karel) {
+  if(karel == '<'){
+    return 'W';
   }
-  return 0;}
-
-funkcia leap_year(const int year){
-  if(year<1||year>4443){
-   return -1;}
-  if(year%400==0){
-   return 1;}
-  if(year%100==0){
-   return 1;}
-  if(year%4==0){
-   return 1;}
- return 0;}
-
-funkcia count_leap_years(const int size, const int array[]){
- if(array==NULL){
-  return -1;}
-  int count=0;
- for(int i=0;i<size;i++){
-  if(leap_year(array[i])){
-   count++;}
-  return count;}
+  if(karel == '>'){
+    return 'E';
+  }
+  if(karel == '^'){
+    return 'N';
+  }
+  if(karel == 'v'){
+    return 'S';
+  }
+  else{
+    return '?';
+  }
 }
+  
+
+
+int check_SPZ(const char spz[]) {
+  if(spz == NULL){
+    return -1;
+  }
+  return -2;
+}
+
+
+int count_positives(const int size, const int array[]) {
+  if(array == NULL){
+    return -1;
+  }
+  int count = 0;
+  for (int i = 0; i < size; i++){
+    if(array[i] > 0){
+        count ++;
+    }
+  }
+  return count;
+}
+
 
 int longest_row(const int rows, const int cols, char array[rows][cols]) {
-  if(array==NULL||rows<1||cols<1){
-    return -1;}
-  int longest =0;
-  int size =0;
-  for(int x=0;x<rows;x++){
-    if(strlen(array[x])>size){
-      size = strlen(array[x]);
-      longest = x;}
+  return -2;
+}
+
+
+int n_fib(const int n) {
+  return -2;
+}
+
+int guess_eval(const int guess, const int my_number) {
+  return -1;
+}
+
+
+int is_white(const char c) {
+  return -1;
+}
+
+
+void change_whites(char string[]) {
+
+}
+
+
+int vowels_count(const char string[]) {
+  return -2;
+}
+
+
+int count_zeroes_2d(const int size, int array[][size]) {
+  return -2;
+}
+
+
+int n_fib(const int n) {
+  return -1;
+}
+
+int guess_eval(const int guess, const int my_number) {
+  if(guess == my_number)
+    return 1;
+  if(guess > my_number)
+    return 0;
+  return 2;
+  
+}
+
+
+int same_case(const char a, const char b) {
+  if(isupper(a)){
+    if(isupper(b))
+      return 1;
   }
-return longest;}
+  if(islower(b)){
+    if(islower(a))
+      return 1;
+  }
+  if(!isalpha(a) || !isalpha(b)){
+    return -1;
+  }
+  return 0;
+}
+
+
+int check_SPZ(const char spz[]) {
+  if(spz == NULL)
+    return -1;
+  
+  for(int i = 0; i < 7; i++){
+    if(i <= 1){
+      if(!isupper(spz[i]))
+        return 0;
+    }
+    if( i > 1 && i <= 4){
+      if(!isdigit(spz[i]))
+        return 0;
+    }
+    if(i > 4){
+      if(!isupper(spz[i]))
+        return 0;
+    }
+  }
+  return 1;
+}
+
+
+int vowels_count(const char string[]) {
+  if(string == NULL)
+    return -1;
+  int counter = 0;
+  for(int i = 0; i< strlen(string); i++){
+    if(string[i] == 'a' || string[i] == 'A' || string[i] == 'e' || string[i] == 'E' || string[i] == 'i' || string[i] == 'I' || string[i] == 'o' || string[i] == 'O' || string[i] == 'u' || string[i] == 'U' || string[i] == 'y' || string[i]=='Y')counter++;
+  }
+  return counter;
+}
+
+
+int is_in_array_2d(const int num, const int size, int array[][size]) {
+  if(array == NULL)
+    return -1;
+  for(int i = 0; i < size; i++)
+    for(int  j = 0; j < size; j++){
+    if( array[i][j] == num)
+      return 1;
+  }
+  return 0;
+}
+
+int is_triangle(const int alpha, const int beta, const int gamma) {
+  int result = alpha + beta + gamma;
+  if(alpha < 1 || beta < 1 || gamma < 1){
+    return -1;
+  }
+  if(result == 180){
+    return 1;
+  }
+  else{
+    return 0;
+  }
+  return -2;
+}
+
+
+int is_won(const char a, const char b, const char c) {
+  if(a == b || a == b+32 || a == b-32){
+    if(a == c || a == c+32 || a == c-32){
+      return 1;
+    }
+    else{
+      return 0;
+    }
+  }
+  else{
+    return 0;
+  }
+  
+  return -1;
+}
+
+
+void change_whites(char string[]) {
+  if(string == NULL){
+    
+  }
+  else{
+    for(int i = 0; i < strlen(string); i++){
+        if(string[i] == ' ' || string[i] == '\n'){
+              string[i] = '.';
+        }
+      }
+  }
+}
+
+
+int last_positive(const int size, const int array[]){
+  int num = 0;
+  if(array != NULL){
+    for(int i = 0; i < size; i++){
+      if(array[i] > 0){
+        num = array[i];
+      }
+    }
+    if(num > 0){
+      return num;
+    }
+    else{
+      return -1;
+    }
+  }
+  else{
+    return -1;
+  }
+  
+  return -2;
+}
+
 
 int largest_col(const int size, int array[][size]) {
   int indexVar = 0;
@@ -567,34 +575,249 @@ int largest_col(const int size, int array[][size]) {
       for(int j = 0; j < size; j++){
         resultVar = resultVar + array[j][i];
         //printf("%d\n", resultVar);
-        indexVar = i;}
+        indexVar = i;
+      }
       if(resultVar > resultMax){
         resultMax = resultVar;
-        index = indexVar;}
+        index = indexVar;
+      }
+      //printf("index = %d\n", index);
     }
-    return index;}
+    return index;
+  }
   else{
-    return -1;}
-  return -2;}
+    return -1;
+  }
+  
+  return -2;
+}
+
+
+int longest_row(const int rows, const int cols, char array[rows][cols]) {
+    int longVar = 0;
+    int longNum = 0;
+  int index;
+  
+  if(array == NULL){
+    return -1;
+  }
+  for(int i = 0; i < rows; i++){
+      if(strlen(array[i]) < 1){
+        return -1;
+    }
+  }
+    
+    
+  if(array != NULL){
+    for(int i = 0; i < rows; i++){
+      printf("%ld\n", strlen(array[i]));
+      longVar = strlen(array[i]);
+      if(longVar > longNum){
+        longNum = longVar;
+        index = i;
+      }
+    }
+    return index;
+  }
+  else{
+    return -1;
+  }
+  
+  return -2;
+}
+
+int is_triangle(const int alpha, const int beta, const int gamma) {
+  if(alpha>0 && beta>0 && gamma>0){
+    if(alpha+beta+gamma==180){
+    return 1;
+  }
+  else{
+    return 0;
+  }
+  }
+  else{
+    return -1;
+  }
+  
+  
+  return -2;
+}
+
+
+int count_negative_evens(const int size, const int array[]) {
+  int a=0;
+  if(array==NULL){
+  return -1;
+}
+  for(int i=0;i<size;i++){
+    if(array[i]<0 && array[i]%2==0){
+      a++;
+    }
+  }
+  return a;
+  return -2;
+}
+
+
+int count_whites(const char string[]) {
+ int a=0;
+  if(string==NULL){
+    return -1;
+  }
+  for(int i=0;i<strlen(string);i++){
+    if(string[i]==' '||string[i]=='\t'||string[i]=='\n'){
+      a++;
+    }
+  }
+ return a;
+  return -2;
+}
+
+
+int max_2d(const int size, int array[][size]) {
+  if(array==NULL){
+    return -1;
+  }
+int a=array[0][0];
+//nt maxElement = INT_MIN;
+  for(int i=0;i<size;i++){
+    for(int j=0;j<size;j++){
+ if(array[i][j]>a){
+   a=array[i][j];
+ }
+    }
+  }
+  return a;
+  return -2;
+}
+
+
+void sort_desc(int array[], const int size) {
+  if(array!=NULL&&size>1){
+   
+   int temp,  j, k;
+   for (j = 0; j < size; ++j)
+   {
+      for (k = j + 1; k < size; ++k)
+      {
+         if (array[j] < array[k])
+         {
+            temp = array[j];
+            array[j] = array[k];
+            array[k] = temp;
+         }
+      }
+   }
+ /*  for (i = 0; i < size; ++i){
+      printf("%d ", array[i]);
+}
+*/
+}
+}
+
+int is_valid(const int num) {
+    if(num >= (-130) && num <= 130){
+      return 1;
+    }
+  return 0;
+}
+
+
+int negative_even(const int number) {
+  if(number <0){
+    if(number%2 ==0){
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
+int all_positives(const int size, const int array[]) {
+  if (array ==NULL){
+    return -1;
+  }
+  int is_positive = 1;
+  for(int x=0;x<size;x++){
+    if(array[x]<=0){
+      is_positive = 0;
+    }
+  }
+  if(is_positive == 1){
+    return 1;
+  }
+  else{
+    return 0;
+  }
+}
+
+
+int vowels_count(const char string[]) {
+  if(string==NULL){
+    return -1;
+  }
+  int x = strlen(string);
+  int count =0;
+  for(int y=0;y<x;y++){
+    if(string[y]=='a'||string[y]=='A'||string[y]=='o'||string[y]=='O'||string[y]=='e'||string[y]=='E'||string[y]=='i'||string[y]=='I'||string[y]=='u'||string[y]=='U'||string[y]=='y'||string[y]=='Y'){
+      count++;
+    }
+  }
+  return count;
+}
+
 
 int is_prime(const int num) {
   int prime = 0;
-  if(num<0){return 0;}    
-  if(num==1){return 0;}    
-  if(num==2){return 1;}    
-  if(num==3){return 1;}    
-  if(num==5){return 1;}    
-  if(num==7){return 1;}    
-  if(num%1==0){prime=1}    
-  else{prime=0;}    
-  if(num%2==0){prime =0;}    
-  if(num%3==0){prime =0;}    
-  if(num%4==0){prime =0;}    
-  if(num%5==0){prime =0;}    
-  if(num%6==0){prime =0;}    
-  if(num%7==0){prime =0;}    
-  if(num%8==0){prime =0;}    
-  if(num%9==0){prime =0;}
+  if(num<0){
+    return 0;
+  }
+  if(num==1){
+    return 0;
+  }
+  if(num==2){
+    return 1;
+  }
+  if(num==3){
+    return 1;
+  }
+  if(num==5){
+    return 1;
+  }
+  if(num==7){
+    return 1;
+  }
+  if(num%1==0){
+    prime =1;
+  }
+  else{
+    prime =0;
+  }
+  if(num%2==0){
+    prime =0;
+  }
+  if(num%3==0){
+    prime =0;
+  }
+  if(num%4==0){
+    prime =0;
+  }
+  if(num%5==0){
+    prime =0;
+  }
+  if(num%6==0){
+    prime =0;
+  }
+  if(num%7==0){
+    prime =0;
+  }
+  if(num%8==0){
+    prime =0;
+  }
+  if(num%9==0){
+    prime =0;
+  }
+  
 
  if (prime == 1&& (num%num==0)){
    return 1;
@@ -602,18 +825,184 @@ int is_prime(const int num) {
   return 0;
 }
 
-void sort_desc(int array[], const int size) {
-  if(array!=NULL&&size>1){
-   int temp,  j, k;
-   for (j = 0; j < size; ++j){
-      for (k = j + 1; k < size; ++k){
-         if (array[j] < array[k]){
-            temp = array[j];
-            array[j] = array[k];
-            array[k] = temp;
-         }
-      }
-   }
- }
+int longest_row(const int rows, const int cols, char array[rows][cols]) {
+  if(array==NULL||rows<1||cols<1){
+    return -1;
+  }
+  int longest =0;
+  int size =0;
+  for(int x=0;x<rows;x++){
+    if(strlen(array[x])>size){
+      size = strlen(array[x]);
+      longest = x;
+    }
+  }
+return longest;
+}
+
+
+long multiples(const int below) {
+  if(below<0||below>=10000){
+    return -1;
+  }
+  int result =0;
+  for(int y=0;y<below;y++){
+    if(y%3==0||y%5==0){
+      result = result+y;
+    }
+  }
+  return result;
+}
+
+
+int direction_degree(const char dir) {
+  switch(dir){
+    case 'E':
+        return 0;
+        break;
+    case 'N':
+        return 90;
+        break;
+    case 'W':
+        return 180;
+        break;
+    case 'S':
+        return 270;
+        break;
+    default:
+        return -1;
+        break;
+  }
+}
+
+
+int leap_year(const int year) {
+  if(year < 1 || year > 4443)
+    return -1;
+  
+  if(year % 400 == 0)
+    return 1;
+  if(year % 100 == 0)
+    return 0;
+  if(year % 4 == 0)
+    return 1;
+  
+  return 0;
+}
+
+
+int count_leap_years(const int size, const int array[]) {
+  if(array == NULL)
+    return -1;
+  int count = 0;
+  for(int i = 0; i < size; i++){
+    if(leap_year(array[i]))
+      count++;
+  }
+  return count;
+}
+
+
+int count_positives(const int size, const int array[]) {
+  if(array == NULL)
+    return -1;
+  int count = 0;
+  for(int i = 0; i < size; i++){
+    if(array[i] > 0)
+      count++;
+  }
+  
+  return count;
+}
+
+
+int sum_digits(const long int number) {
+  if(number < 0)
+    return 0;
+  
+  long int temp_number = number;
+  long int sum = 0;
+  while(temp_number > 0){
+      sum += temp_number % 10;
+      temp_number /= 10;
+  }
+  return sum;
+  //return -1;
+}
+
+int direction_degree(const char dir) {
+  if (dir == 'E') { return 0; }
+  else if (dir == 'N') { return 90; }
+  else if (dir == 'W') { return 180; }
+  else if (dir == 'S') { return 270; }
+  else { return -1;}
+}
+
+
+int is_vowel(const char c) {
+  char f = tolower(c);
+  
+  if(f == 'a' || f == 'e' || f == 'i' || f == 'o' || f == 'u' || f == 'y') { return 1; }
+  else { return 0; }
+}
+
+
+int count_vowels(char a, char b) {
+  char temp;
+  int x = 0;
+  
+  if(isalpha(a) && isalpha(b)) {
+    if((islower(a) && islower(b)) || (isupper(a) && isupper(b))) {
+      if(a > b) { temp = a; a = b; b = temp; } // swap
+      
+      for(char i = a; i <= b; i++) { if(is_vowel(i)) { x++; } }
+    } else { return 0; }
+  } else { return 0; }
+  
+  return x;
+}
+
+
+void string_to_upper(char string[]) {
+  if(string == NULL) { return; }
+  
+  for(int i = 0; string[i] != '\0'; i++) {
+    if(isalpha(string[i])) { string[i] = toupper(string[i]); }
+  }
+}
+
+
+int is_in_array_2d(const int num, const int size, int array[][size]) {
+  if(array == NULL) { return -1; }
+  
+  for(int i = 0; i < size; i++) {
+    for(int j = 0; j < size; j++) {
+      if(array[i][j] == num) { return 1; }
+    }
+  }
+  
+  return 0;
+}
+
+int compare_ints(const void* a, const void* b)
+{
+    int arg1 = *(const int*)a;
+    int arg2 = *(const int*)b;
+ 
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+    return 0;
+}
+
+
+void sort(int array[], const int size) {
+  if(array == NULL || size < 1) { return; }
+  
+  qsort(array, size, sizeof(int), compare_ints);
+}
+
+
+int main() {
+  return 0;
 }
 
