@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+
 int karel_asleep(const char position) {
   if(position == '-')
     return 1;
